@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # 3ed parties
     "rest_framework",
+    "rest_framework_mongoengine",
     "corsheaders",
 ]
 
@@ -125,3 +126,11 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # cors headers config
 CORS_ALLOWED_ORIGINS = env("CORS_ALLOWED_ORIGINS")
+
+
+# RabbitMQ Configuration
+RABBITMQ_HOST = env("RABBITMQ_HOST", default="localhost")
+RABBITMQ_PORT = env.int("RABBITMQ_PORT", default=5672)
+RABBITMQ_USER = env("RABBITMQ_USER", default="guest")
+RABBITMQ_PASSWORD = env("RABBITMQ_PASSWORD", default="guest")
+RABBITMQ_QUEUE = env("RABBITMQ_QUEUE", default="")
