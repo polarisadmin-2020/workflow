@@ -49,6 +49,9 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework_mongoengine",
     "corsheaders",
+    #local Apps
+    "application_details",
+
 ]
 
 MIDDLEWARE = [

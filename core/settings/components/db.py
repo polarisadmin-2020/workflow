@@ -1,16 +1,16 @@
 """Database settings for the Django project."""
- 
+
 import os
 from urllib.parse import quote_plus
- 
+
 import environ
 from mongoengine import connect
- 
+
 from core.settings.common import BASE_DIR
- 
+
 # Load environment variables from the .env file
 environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
- 
+
 # Initialize environment variables
 env = environ.Env(
     DATABASE_ENGINE=(str, "django.db.backends.sqlite3"),
@@ -25,7 +25,7 @@ env = environ.Env(
     MONGO_DATABASE_USER=(str, ""),
     MONGO_DATABASE_PASSWORD=(str, ""),
 )
- 
+
 # SQL Database settings (example with SQLite)
 DATABASES = {
     "default": {
@@ -37,26 +37,29 @@ DATABASES = {
         "PORT": env("DATABASE_PORT"),
     },
 }
- 
+
 # MongoDB connection settings
 MONGO_DATABASE_NAME = env("MONGO_DATABASE_NAME")
 MONGO_DATABASE_HOST = env("MONGO_DATABASE_HOST")
 MONGO_DATABASE_PORT = env("MONGO_DATABASE_PORT")
 MONGO_DATABASE_USER = env("MONGO_DATABASE_USER")
 MONGO_DATABASE_PASSWORD = env("MONGO_DATABASE_PASSWORD")
- 
+
 # URL-encode the username and password
 MONGO_DATABASE_USER = quote_plus(MONGO_DATABASE_USER)
 MONGO_DATABASE_PASSWORD = quote_plus(MONGO_DATABASE_PASSWORD)
- 
+
 # Build the MongoDB URI
 if MONGO_DATABASE_USER and MONGO_DATABASE_PASSWORD:
-    MONGO_URI = f"mongodb://{MONGO_DATABASE_USER}:{MONGO_DATABASE_PASSWORD}@{MONGO_DATABASE_HOST}:{MONGO_DATABASE_PORT}/{MONGO_DATABASE_NAME}"
+    MONGO_URI = (
+        f"mongodb://{MONGO_DATABASE_USER}:{MONGO_DATABASE_PASSWORD}@"
+        f"{MONGO_DATABASE_HOST}:{MONGO_DATABASE_PORT}/"
+        f"{MONGO_DATABASE_NAME}"
+    )
 else:
     MONGO_URI = (
         f"mongodb://{MONGO_DATABASE_HOST}:{MONGO_DATABASE_PORT}/{MONGO_DATABASE_NAME}"
     )
- 
+
 # Connect to MongoDB using mongoengine
 connect(MONGO_DATABASE_NAME, host=MONGO_URI)
- 
