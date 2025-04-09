@@ -3,7 +3,7 @@
 from typing import Type
 
 from django.utils.timezone import now
-from mongoengine import StringField
+from mongoengine import StringField, Document
 
 
 class Application(Document):
