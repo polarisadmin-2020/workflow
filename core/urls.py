@@ -20,8 +20,8 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    path("wf/", admin.site.urls),
-    path("api/v1/application-details/", include("application_details.urls")),
+    path("wf/admin/", admin.site.urls),
+    path("wf/api/v1/application-details/", include("application_details.urls")),
 ]
 
 if settings.DEBUG:
