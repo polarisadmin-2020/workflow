@@ -2,7 +2,7 @@
 
 from typing import Any, Dict
 
-from rest_framework import status as drf_status
+from rest_framework import status as drf_status, generics
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -10,6 +10,13 @@ from rest_framework.views import APIView
 from .models import Application
 from .serializers import ApplicationSerializer
 
+
+class ApplicationListView(generics.ListAPIView):
+    """View to list all Applications."""
+
+    queryset = Application.objects
+    serializer_class = ApplicationSerializer
+    
 
 # API view to retrieve and update application status
 class ApplicationStatusView(APIView):

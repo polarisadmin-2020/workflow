@@ -8,3 +8,7 @@ class ApplicationDetailsConfig(AppConfig):
 
     default_auto_field = "django.db.models.BigAutoField"
     name = "application_details"
+
+    def ready(self: "ApplicationDetailsConfig") -> None:
+        """Import signals when the app is ready."""
+        import application_details.signals
