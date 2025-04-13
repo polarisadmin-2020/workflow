@@ -51,11 +51,10 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework_mongoengine",
     "corsheaders",
-    #local Apps
+    # local Apps
     "application_details",
     "login",
     "rabbitmq",
-
 ]
 
 MIDDLEWARE = [
