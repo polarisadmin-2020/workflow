@@ -3,10 +3,10 @@
 from typing import Type
 
 from django.utils.timezone import now
-from mongoengine import StringField, Document
+from mongoengine import StringField, DynamicDocument
 
 
-class Application(Document):
+class Application(DynamicDocument):
     """Stores application information for different field types."""
 
     application_number = StringField(required=True, unique=True)
