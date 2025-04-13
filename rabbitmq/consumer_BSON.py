@@ -9,8 +9,8 @@ import django
 import mongoengine
 import pika
 from bson import ObjectId
-from django.conf import settings
 from django.apps import apps
+from django.conf import settings
 from mongoengine.errors import ValidationError
 
 # Setup Django environment
@@ -148,10 +148,13 @@ def start_consumer():
                             ch.basic_ack(delivery_tag=method.delivery_tag)
                         except json.JSONDecodeError:
                             print(f"[{queue}] Error: Unable to decode JSON.")
-                            ch.basic_nack(delivery_tag=method.delivery_tag, requeue=False)
+                            ch.basic_nack(
+                                delivery_tag=method.delivery_tag, requeue=False
+                            )
                         except Exception as e:
                             print(f"[{queue}] Error: {str(e)}")
                             ch.basic_nack(delivery_tag=method.delivery_tag)
+
                     return callback
 
                 channel.basic_consume(
