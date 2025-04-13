@@ -2,12 +2,12 @@
 
 from django.urls import path
 
-from .views import ApplicationStatusView, ApplicationListView
+from .views import ApplicationRetrieveUpdateAPIView, ApplicationListView
 
 urlpatterns = [
     path(
         "application/<str:application_number>/status/", 
-        ApplicationStatusView.as_view(),
+        ApplicationRetrieveUpdateAPIView.as_view(),
     ),
     path("list/", ApplicationListView.as_view(), name="application-list",),
 ]

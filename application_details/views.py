@@ -19,7 +19,7 @@ class ApplicationListView(generics.ListAPIView):
     
 
 # API view to retrieve and update application status
-class ApplicationStatusView(APIView):
+class ApplicationRetrieveUpdateAPIView(generics.RetrieveUpdateAPIView):
     """API view to get or update application status."""
 
     queryset = Application.objects
