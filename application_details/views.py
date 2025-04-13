@@ -22,17 +22,21 @@ class ApplicationListView(generics.ListAPIView):
 class ApplicationStatusView(APIView):
     """API view to get or update application status."""
 
-    def get(self, request, *args, **kwargs):
-        """Handle get with 404 if the object does not exist."""
-        application_number = kwargs["application_number"]
-        form = Application.objects(application_number=application_number).first()
+    queryset = Application.objects
+    serializer_class = DynamicApplicationSerializer
 
-        if not form:
+    def retrieve(self, request, *args, **kwargs):
+        """Handle GET with 404 if application_number not found."""
+        application_number = kwargs["application_number"]
+        instance = Application.objects(application_number=application_number).first()
+
+        if not instance:
             return Response(
                 {"error": "Application not found"}, status=drf_status.HTTP_404_NOT_FOUND
             )
 
-        return super().get(request, *args, **kwargs)
+        serializer = self.get_serializer(instance)
+        return Response(serializer.data)
 
     # Handle PATCH request to update application status
     def patch(self, request, application_number, *args, **kwargs):
