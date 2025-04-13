@@ -22,31 +22,48 @@ class ApplicationListView(generics.ListAPIView):
 class ApplicationStatusView(APIView):
     """API view to get or update application status."""
 
-    def get(self, request: "Request", application_number: str) -> Response:
-        """Return the status of an application by its application number."""
+    def get(self, request, *args, **kwargs):
+        """Handle get with 404 if the object does not exist."""
+        application_number = kwargs["application_number"]
+        form = Application.objects(application_number=application_number).first()
 
-        try:
-            application = Application.objects.get(application_number=application_number)
-            serializer = DynamicApplicationSerializer(application)
-            return Response(serializer.data)
-        except Application.DoesNotExist:
+        if not form:
             return Response(
                 {"error": "Application not found"}, status=drf_status.HTTP_404_NOT_FOUND
             )
+
+        return super().get(request, *args, **kwargs)
 
     # Handle PATCH request to update application status
-    def patch(self, request: Request, application_number: str) -> Response:
-        """Update the status of an application by its application number."""
+    def patch(self, request, application_number, *args, **kwargs):
+        """Handle PATCH request ensuring 'application_number' is not sent."""
+        application = Application.objects(application_number=application_number).first()
 
-        try:
-            application = Application.objects.get(application_number=application_number)
-        except Application.DoesNotExist:
+        if not application:
             return Response(
                 {"error": "Application not found"}, status=drf_status.HTTP_404_NOT_FOUND
             )
 
-        serializer = DynamicApplicationSerializer(application, data=request.data, partial=True)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=drf_status.HTTP_400_BAD_REQUEST)
+        if "application_number" in request.data:
+            return Response(
+                {"error": "'application_number' cannot be edited."},
+                status=drf_status.HTTP_400_BAD_REQUEST,
+            )
+
+        for key, value in request.data.items():
+            if hasattr(application, key):
+                setattr(application, key, value)
+            else:
+                print(f"Skipping unknown field: {key}")  # Optional debug
+
+        application.save()
+        application.reload()
+
+        return Response(
+            {
+                "message": "Application status updated successfully",
+                "Application number": str(application.application_number),
+                "status": str(application.status),
+            },
+            status=drf_status.HTTP_200_OK,
+        )
