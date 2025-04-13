@@ -22,6 +22,10 @@ from django.urls import path, include
 urlpatterns = [
     path("wf/admin/", admin.site.urls),
     path("wf/api/v1/application-details/", include("application_details.urls")),
+    path(
+        "wf/api/v1/login/",
+        include("login.urls"),
+    ),
 ]
 
 if settings.DEBUG:
