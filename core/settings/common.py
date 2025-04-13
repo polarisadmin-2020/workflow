@@ -53,6 +53,8 @@ INSTALLED_APPS = [
     "corsheaders",
     #local Apps
     "application_details",
+    "login",
+    "rabbitmq",
 
 ]
 
