@@ -61,5 +61,7 @@ else:
         f"mongodb://{MONGO_DATABASE_HOST}:{MONGO_DATABASE_PORT}/{MONGO_DATABASE_NAME}"
     )
 
-# Connect to MongoDB using mongoengine
-connect(MONGO_DATABASE_NAME, host=MONGO_URI)
+try:
+    connect(MONGO_DATABASE_NAME, host=MONGO_URI, serverSelectionTimeoutMS=3000)
+except Exception as e:
+    print(f"⚠️ MongoDB connection failed: {e}")
