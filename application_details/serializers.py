@@ -1,30 +1,13 @@
 """Configuration serializers."""
 
-from typing import Any, Dict
-
-from rest_framework_mongoengine.serializers import DocumentSerializer
-
-from .models import Application
+from rest_framework import serializers
 
 
-class ApplicationSerializer(DocumentSerializer):
-    """Serializer for application_details."""
+class DynamicApplicationSerializer(serializers.Serializer):
+    """Serializer for Application to validate and store JSON data."""
 
-    class Meta:
-        """Metadata options for the ApplicationSerializer class."""
-
-        model = Application
-        fields = "__all__"
-
-    # application_number = serializers.CharField()
-    # status = serializers.CharField()
-
-    # def update(
-    #     self,
-    #     instance: Application,
-    #     validated_data: Dict[str, Any],
-    # ) -> Application:
-    #     """Update application status."""
-    #     instance.status = validated_data.get("status", instance.status)
-    #     instance.save()
-    #     return instance
+    def to_representation(self, obj):
+        """Convert the MongoEngine document to a dict"""
+        data = obj.to_mongo().to_dict()
+        data["id"] = str(data.pop("_id"))  # Optional: Convert ObjectId to string
+        return data

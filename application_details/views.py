@@ -8,14 +8,14 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .models import Application
-from .serializers import ApplicationSerializer
+from .serializers import DynamicApplicationSerializer
 
 
 class ApplicationListView(generics.ListAPIView):
     """View to list all Applications."""
 
     queryset = Application.objects
-    serializer_class = ApplicationSerializer
+    serializer_class = DynamicApplicationSerializer
     
 
 # API view to retrieve and update application status
@@ -27,7 +27,7 @@ class ApplicationStatusView(APIView):
 
         try:
             application = Application.objects.get(application_number=application_number)
-            serializer = ApplicationSerializer(application)
+            serializer = DynamicApplicationSerializer(application)
             return Response(serializer.data)
         except Application.DoesNotExist:
             return Response(
@@ -45,7 +45,7 @@ class ApplicationStatusView(APIView):
                 {"error": "Application not found"}, status=drf_status.HTTP_404_NOT_FOUND
             )
 
-        serializer = ApplicationSerializer(application, data=request.data, partial=True)
+        serializer = DynamicApplicationSerializer(application, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
