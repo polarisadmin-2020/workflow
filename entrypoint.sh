@@ -9,8 +9,11 @@ python -m gunicorn core.wsgi:application --bind 0.0.0.0:8004 --workers 4 --acces
 
 sleep 3
 
-# Start the RabbitMQ Consumers
 echo "Starting RabbitMQ Consumers..."
-exec python rabbitmq/consumer_BSON.py || { echo "Failed to start RabbitMQ Consumer"; exit 1; }
-python rabbitmq/consumer.py &
+
+# Start both consumers in background
+python rabbitmq/consumer_BSON.py || { echo "Failed to start consumer_BSON"; exit 1; } &
+python rabbitmq/consumer.py || { echo "Failed to start consumer"; exit 1; } &
+
+# Wait for all background processes
 wait
