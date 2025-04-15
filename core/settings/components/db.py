@@ -54,7 +54,7 @@ if MONGO_DATABASE_USER and MONGO_DATABASE_PASSWORD:
     MONGO_URI = (
         f"mongodb://{MONGO_DATABASE_USER}:{MONGO_DATABASE_PASSWORD}@"
         f"{MONGO_DATABASE_HOST}:{MONGO_DATABASE_PORT}/"
-        f"{MONGO_DATABASE_NAME}"
+        f"{MONGO_DATABASE_NAME}?authSource=admin"
     )
 else:
     MONGO_URI = (
