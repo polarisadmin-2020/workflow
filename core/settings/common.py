@@ -55,6 +55,8 @@ INSTALLED_APPS = [
     "application_details",
     "login",
     "rabbitmq",
+    "profile_details",
+    "organizational_structure",
 ]
 
 MIDDLEWARE = [
@@ -142,5 +144,5 @@ RABBITMQ_HOST = env("RABBITMQ_HOST", default="localhost")
 RABBITMQ_PORT = env.int("RABBITMQ_PORT", default=5672)
 RABBITMQ_USER = env("RABBITMQ_USER", default="guest")
 RABBITMQ_PASSWORD = env("RABBITMQ_PASSWORD", default="guest")
-RABBITMQ_QUEUE = env("RABBITMQ_QUEUE", default="")
+RABBITMQ_QUEUES = env.list("RABBITMQ_QUEUES", default=[])
 RABBITMQ_QUEUES_BSON = env.list("RABBITMQ_QUEUES_BSON", default=[])

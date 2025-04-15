@@ -11,5 +11,6 @@ sleep 3
 
 # Start the RabbitMQ Consumers
 echo "Starting RabbitMQ Consumers..."
-exec python rabbitmq/consumer_BSON.py || { echo "Failed to start RabbitMQ Consumer"; exit 1; } &
+exec python rabbitmq/consumer_BSON.py || { echo "Failed to start RabbitMQ Consumer"; exit 1; }
+python rabbitmq/consumer.py &
 wait
