@@ -1,8 +1,5 @@
 """Models for the application_details app."""
 
-from typing import Type
-
-from django.utils.timezone import now
 from mongoengine import StringField, DynamicDocument
 
 
@@ -11,6 +8,7 @@ class Application(DynamicDocument):
 
     application_number = StringField(required=True, unique=True)
     status = StringField(required=True)
+    created_at = StringField()
     meta = {
         "collection": "application",
         "indexes": [
@@ -19,4 +17,7 @@ class Application(DynamicDocument):
                 "unique": True,
             },
         ],
-    }  # Define MongoDB collection name
+
+        "ordering": ["-created_at"]  # Default ordering by created_date (descending)
+
+    }

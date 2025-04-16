@@ -14,9 +14,14 @@ from .serializers import DynamicApplicationSerializer
 class ApplicationListView(generics.ListAPIView):
     """View to list all Applications."""
 
-    queryset = Application.objects
     serializer_class = DynamicApplicationSerializer
-    
+
+    def get_queryset(self):
+        """Return the list of all applications, always fetching the latest data."""
+        queryset = Application.objects.all()
+
+        return queryset
+
 
 # API view to retrieve and update application status
 class ApplicationRetrieveUpdateAPIView(generics.RetrieveUpdateAPIView):
