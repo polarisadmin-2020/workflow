@@ -1,6 +1,6 @@
 """Models for the application_details app."""
 
-from mongoengine import StringField, DynamicDocument
+from mongoengine import DynamicDocument, StringField
 
 
 class Application(DynamicDocument):
@@ -17,7 +17,5 @@ class Application(DynamicDocument):
                 "unique": True,
             },
         ],
-
-        "ordering": ["-created_at"]  # Default ordering by created_date (descending)
-
+        "ordering": ["-created_at"],  # Default ordering by created_date (descending)
     }

@@ -28,7 +28,7 @@ def publish_application(sender, document, **kwargs):
             model_name="Application",
             data=data,
             queue_name="application-updates",  # Consistent with your other code
-            action="update"
+            action="update",
         )
         publisher.close()
         print(f"Published update for Application: {data.get('application_number')}")
