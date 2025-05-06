@@ -8,7 +8,6 @@ from organizational_structure.models import Position
 class PositionSerializer(serializers.ModelSerializer):
     """Used for retrieving and displaying data in a detailed format."""
 
-
     class Meta:
         """Metadata options for the PositionSerializer class."""
 

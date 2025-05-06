@@ -11,4 +11,3 @@ class PositionListAPIView(generics.ListAPIView):
 
     queryset = Position.objects.all()
     serializer_class = PositionSerializer
-

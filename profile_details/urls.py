@@ -5,5 +5,9 @@ from django.urls import path
 from profile_details.views import EmployeeRetrieveView
 
 urlpatterns = [
-    path("employees/<int:employment_number>/", EmployeeRetrieveView.as_view(), name="employee-detail"),
+    path(
+        "employees/<int:employment_number>/",
+        EmployeeRetrieveView.as_view(),
+        name="employee-detail",
+    ),
 ]

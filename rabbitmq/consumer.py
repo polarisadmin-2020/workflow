@@ -113,7 +113,9 @@ def consume_queue(queue_name: str) -> None:
             channel.start_consuming()
 
         except pika.exceptions.AMQPConnectionError:
-            print(f"[x] Connection lost for queue '{queue_name}'. Reconnecting in 5s...")
+            print(
+                f"[x] Connection lost for queue '{queue_name}'. Reconnecting in 5s..."
+            )
             time.sleep(5)
 
 

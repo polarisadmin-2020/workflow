@@ -25,7 +25,6 @@ class Position(Group):
         verbose_name=_("Is Deleted"),
     )
 
-
     class Meta:
         """Metadata options for the Position model."""
 

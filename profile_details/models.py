@@ -3,6 +3,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+
 from organizational_structure.models import Position
 
 
@@ -20,14 +21,14 @@ class Employee(AbstractUser):
     second_name = models.CharField(
         max_length=200,
         verbose_name=_("Second Number"),
-        null = True,
-        blank = True,
+        null=True,
+        blank=True,
     )
     Third_name = models.CharField(
         max_length=200,
         verbose_name=_("Third Number"),
-        null = True,
-        blank = True,
+        null=True,
+        blank=True,
     )
     job_title = models.CharField(
         max_length=200,
@@ -55,7 +56,7 @@ class Employee(AbstractUser):
         Position,
         related_name="employees",
         verbose_name=_("Positions"),
-        blank =True,
+        blank=True,
     )
     profile_image = models.ImageField(
         upload_to="employee_images/",
