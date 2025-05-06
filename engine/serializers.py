@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Step, Workflow
+from engine.models import Step, Workflow
 
 
 class WorkflowSerializer(serializers.ModelSerializer):
