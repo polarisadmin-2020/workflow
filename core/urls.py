@@ -17,10 +17,17 @@ Including another URLconf
 
 from django.conf import settings
 from django.contrib import admin
-from django.urls import path
+from django.urls import include, path
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
+    path("wf/admin/", admin.site.urls),
+    path("wf/api/v1/application-details/", include("application_details.urls")),
+    path("wf/api/v1/", include("login.urls")),
+    path("wf/api/v1/profile_details/", include("profile_details.urls")),
+    path(
+        "wf/api/v1/organizational_structure/", include("organizational_structure.urls")
+    ),
+    path("wf/api/v1/engine/", include("engine.urls")),
 ]
 
 if settings.DEBUG:

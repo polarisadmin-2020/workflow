@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 import os
 from pathlib import Path
 
+
 import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -25,6 +26,8 @@ env = environ.Env(
     TIME_ZONE=(str, "UTC"),
     CORS_ALLOWED_ORIGINS=(list, []),
 )
+
+CSRF_TRUSTED_ORIGINS = env.list("CSRF_TRUSTED_ORIGINS", default=[])
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
@@ -47,11 +50,19 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # 3ed parties
     "rest_framework",
+    "rest_framework_mongoengine",
     "corsheaders",
+    # local Apps
+    "application_details",
+    "login",
+    "rabbitmq",
+    "profile_details",
+    "organizational_structure",
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -118,6 +129,8 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 
+STATIC_ROOT = os.path.join(BASE_DIR, "Static")
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
@@ -125,3 +138,12 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # cors headers config
 CORS_ALLOWED_ORIGINS = env("CORS_ALLOWED_ORIGINS")
+
+
+# RabbitMQ Configuration
+RABBITMQ_HOST = env("RABBITMQ_HOST", default="localhost")
+RABBITMQ_PORT = env.int("RABBITMQ_PORT", default=5672)
+RABBITMQ_USER = env("RABBITMQ_USER", default="guest")
+RABBITMQ_PASSWORD = env("RABBITMQ_PASSWORD", default="guest")
+RABBITMQ_QUEUES = env.list("RABBITMQ_QUEUES", default=[])
+RABBITMQ_QUEUES_BSON = env.list("RABBITMQ_QUEUES_BSON", default=[])
