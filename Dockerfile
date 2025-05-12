@@ -37,7 +37,7 @@ COPY . .
 RUN chmod +x /app/entrypoint.sh
 
 # Expose the application port
-EXPOSE 8001
+EXPOSE 8004
 
 # Command to run the application
 CMD ["/app/entrypoint.sh"]
