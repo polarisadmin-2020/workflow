@@ -1,29 +1,43 @@
-# Use the official Python 3.12.7 slim image
-FROM python:3.12.7-slim
+# Stage 1: Build
+FROM python:3.12-alpine AS builder
 
-# Set the working directory inside the container
+# Set working directory
 WORKDIR /app
 
-# Install system-level dependencies required for PostgreSQL and building Python packages
-RUN apt-get update && apt-get install -y \
-    libpq-dev gcc \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+# Install build dependencies
+RUN apk add --no-cache \
+    gcc \
+    musl-dev \
+    libffi-dev \
+    postgresql-dev \
+    python3-dev
 
-# Copy the requirements folder with all files
+# Copy requirements and install Python dependencies
 COPY requirements/ /app/requirements/
+RUN pip install --no-cache-dir --prefix=/install -r /app/requirements/development.txt
 
-# Install Python dependencies
-RUN pip install --no-cache-dir -r /app/requirements/development.txt
+# Stage 2: Runtime
+FROM python:3.12-alpine
 
-# Copy the entire project into the container
+# Set working directory
+WORKDIR /app
+
+# Install runtime dependencies
+RUN apk add --no-cache \
+    libffi \
+    libpq
+
+# Copy installed dependencies from builder stage
+COPY --from=builder /install /usr/local
+
+# Copy application code
 COPY . .
 
-# Expose the port Django will run on
-EXPOSE 8004
-
-# Make the script executable
+# Make entrypoint script executable
 RUN chmod +x /app/entrypoint.sh
 
-# Set the shell script as the default command
+# Expose the application port
+EXPOSE 8001
+
+# Command to run the application
 CMD ["/app/entrypoint.sh"]
