@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     "rabbitmq",
     "profile_details",
     "organizational_structure",
+    "engine",
 ]
 
 MIDDLEWARE = [
