@@ -54,3 +54,13 @@ class DynamicForm(Document):
             },
         ],
     }  # Define MongoDB collection name
+
+
+class Action(models.Model):
+    name_en = models.CharField(max_length=255)
+    name_ar = models.CharField(max_length=255)
+    is_external = models.BooleanField(default=False)
+    step = models.ForeignKey(Step, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name_en

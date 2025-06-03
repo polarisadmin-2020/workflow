@@ -1,11 +1,8 @@
 """Views for managing application status."""
 
-from typing import Any, Dict
-
 from rest_framework import generics, status as drf_status
 from rest_framework.request import Request
 from rest_framework.response import Response
-from rest_framework.views import APIView
 
 from .models import Application
 from .serializers import DynamicApplicationSerializer
@@ -40,7 +37,7 @@ class ApplicationRetrieveUpdateAPIView(generics.RetrieveUpdateAPIView):
                 {"error": "Application not found"}, status=drf_status.HTTP_404_NOT_FOUND
             )
 
-        serializer = self.get_serializer(instance)
+        serializer = self.get_serializer(instance),
         return Response(serializer.data)
 
     # Handle PATCH request to update application status

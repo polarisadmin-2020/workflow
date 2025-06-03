@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from engine.models import Step, Workflow
+from engine.models import Action, Step, Workflow
 
 
 class WorkflowSerializer(serializers.ModelSerializer):
@@ -23,3 +23,9 @@ class StepSerializer(serializers.ModelSerializer):
     class Meta:
         model = Step
         fields = ["id", "workflow", "name_ar", "name_en", "position", "form_id"]
+
+
+class ActionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Action
+        fields = ["id", "name_ar", "name_en", "is_external", "step"]
