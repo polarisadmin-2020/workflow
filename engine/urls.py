@@ -1,15 +1,38 @@
 from django.urls import path
 
-from engine.views import StepCreateView, StepDeleteView, StepUpdateView, StepsByWorkflowView, WorkflowCreateView, WorkflowUpdateView
+from engine.views import (
+    ActionCreateView,
+    ActionDeleteView,
+    ActionListView,
+    ActionUpdateView,
+    StepCreateView,
+    StepDeleteView,
+    StepsByWorkflowView,
+    StepUpdateView,
+    WorkflowCreateView,
+    WorkflowUpdateView,
+)
 
 urlpatterns = [
     # Workflow endpoints
-    path('workflows/create/', WorkflowCreateView.as_view(), name='workflow-create'),
-    path('workflows/<int:pk>/update/', WorkflowUpdateView.as_view(), name='workflow-update'),
-
+    path("workflows/create/", WorkflowCreateView.as_view(), name="workflow_create"),
+    path(
+        "workflows/<int:pk>/update/",
+        WorkflowUpdateView.as_view(),
+        name="workflow_update",
+    ),
     # Step endpoints
-    path('steps/create/', StepCreateView.as_view(), name='step-create'),
-    path('steps/<int:pk>/update/', StepUpdateView.as_view(), name='step-update'),
-    path('steps/<int:pk>/delete/', StepDeleteView.as_view(), name='step-delete'),
-    path('workflows/<int:workflow_id>/steps/', StepsByWorkflowView.as_view(), name='workflow-steps'),
+    path("steps/create/", StepCreateView.as_view(), name="step_create"),
+    path("steps/<int:pk>/update/", StepUpdateView.as_view(), name="step_update"),
+    path("steps/<int:pk>/delete/", StepDeleteView.as_view(), name="step_delete"),
+    path(
+        "workflows/<int:workflow_id>/steps/",
+        StepsByWorkflowView.as_view(),
+        name="workflow-steps",
+    ),
+    # Action endpoints
+    path("actions/create/", ActionCreateView.as_view(), name="action_create"),
+    path("actions/<int:pk>/update/", ActionUpdateView.as_view(), name="action_update"),
+    path("actions/<int:pk>/delete/", ActionDeleteView.as_view(), name="action_delete"),
+    path("actions/list/<int:step_id>/", ActionListView.as_view(), name="action_list"),
 ]
