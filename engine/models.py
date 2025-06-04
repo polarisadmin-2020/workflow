@@ -60,7 +60,8 @@ class Action(models.Model):
     name_en = models.CharField(max_length=255)
     name_ar = models.CharField(max_length=255)
     is_external = models.BooleanField(default=False)
-    step = models.ForeignKey(Step, on_delete=models.CASCADE)
+    step = models.ForeignKey(Step, on_delete=models.CASCADE,related_name='actions_from')
+    next_step = models.ForeignKey(Step, on_delete=models.CASCADE,related_name='actions_to')
 
     def __str__(self):
         return self.name_en
