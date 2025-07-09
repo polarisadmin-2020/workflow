@@ -11,10 +11,12 @@ from engine.views import (
     StepUpdateView,
     WorkflowCreateView,
     WorkflowUpdateView,
+    WorkflowListView,
 )
 
 urlpatterns = [
     # Workflow endpoints
+    path("workflows/", WorkflowListView.as_view(), name="workflow_list"),
     path("workflows/create/", WorkflowCreateView.as_view(), name="workflow_create"),
     path(
         "workflows/<int:pk>/update/",
