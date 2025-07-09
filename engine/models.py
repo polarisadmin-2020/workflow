@@ -7,9 +7,9 @@ from organizational_structure.models import Position
 
 # Create your models here.
 class Workflow(models.Model):
-    code = models.PositiveIntegerField()
-    name_ar = models.CharField(max_length=255)
-    name_en = models.CharField(max_length=255)
+    code = models.PositiveIntegerField(null=True, blank=True)
+    name_ar = models.CharField(max_length=255, blank=True, null=True)
+    name_en = models.CharField(max_length=255, blank=True, null=True)
     subservice_id = models.CharField(max_length=255)
     active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
