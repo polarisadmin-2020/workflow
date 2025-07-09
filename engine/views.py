@@ -1,13 +1,13 @@
 from rest_framework import generics
 
 from engine.models import Action, Step, Workflow
-from engine.serializers import ActionSerializer, StepSerializer, WorkflowSerializer
+from engine.serializers import ActionSerializer, StepSerializer, WorkflowCreateSerializer, WorkflowSerializer
 
 
 # Create your views here.
 class WorkflowCreateView(generics.CreateAPIView):
     queryset = Workflow.objects.all()
-    serializer_class = WorkflowSerializer
+    serializer_class = WorkflowCreateSerializer
 
 class WorkflowListView(generics.ListAPIView):
     queryset = Workflow.objects.all()
