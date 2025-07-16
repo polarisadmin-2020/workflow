@@ -37,7 +37,7 @@ class ApplicationRetrieveUpdateAPIView(generics.RetrieveUpdateAPIView):
                 {"error": "Application not found"}, status=drf_status.HTTP_404_NOT_FOUND
             )
 
-        serializer = self.get_serializer(instance),
+        serializer = (self.get_serializer(instance),)
         return Response(serializer.data)
 
     # Handle PATCH request to update application status
