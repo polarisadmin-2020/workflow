@@ -9,11 +9,19 @@ class WorkflowCreateView(generics.CreateAPIView):
     queryset = Workflow.objects.all()
     serializer_class = WorkflowCreateSerializer
 
+
 class WorkflowListView(generics.ListAPIView):
     queryset = Workflow.objects.all()
     serializer_class = WorkflowSerializer
 
+
 class WorkflowUpdateView(generics.UpdateAPIView):
+    queryset = Workflow.objects.all()
+    serializer_class = WorkflowSerializer
+    lookup_field = "pk"
+
+
+class WorkflowDeleteView(generics.DestroyAPIView):
     queryset = Workflow.objects.all()
     serializer_class = WorkflowSerializer
     lookup_field = "pk"

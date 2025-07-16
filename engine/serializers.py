@@ -2,6 +2,7 @@ from rest_framework import serializers
 
 from engine.models import Action, Step, Workflow
 
+
 class WorkflowCreateSerializer(serializers.ModelSerializer):
     code = serializers.IntegerField(required=False, allow_null=True)
     name_ar = serializers.CharField(required=False, allow_blank=True)
@@ -24,6 +25,7 @@ class WorkflowCreateSerializer(serializers.ModelSerializer):
         if value == "":
             return None
         return value
+
 
 class WorkflowSerializer(serializers.ModelSerializer):
     class Meta:
@@ -50,4 +52,4 @@ class StepSerializer(serializers.ModelSerializer):
 class ActionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Action
-        fields = ["id", "name_ar", "name_en", "is_external", "step","next_step"]
+        fields = ["id", "name_ar", "name_en", "is_external", "step", "next_step"]
