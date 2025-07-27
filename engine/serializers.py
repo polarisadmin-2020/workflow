@@ -44,9 +44,11 @@ class WorkflowSerializer(serializers.ModelSerializer):
 
 
 class StepSerializer(serializers.ModelSerializer):
+    action_count = serializers.IntegerField(read_only=True)
+    
     class Meta:
         model = Step
-        fields = ["id", "workflow", "name_ar", "name_en", "position", "form_id"]
+        fields = ["id", "workflow", "name_ar", "name_en", "position", "form_id", "action_count"]
 
 
 class ActionSerializer(serializers.ModelSerializer):

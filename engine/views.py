@@ -1,4 +1,5 @@
 from rest_framework import generics
+from django.db.models import Count
 
 from engine.models import Action, Step, Workflow
 from engine.serializers import ActionSerializer, StepSerializer, WorkflowCreateSerializer, WorkflowSerializer
@@ -32,7 +33,9 @@ class StepsByWorkflowView(generics.ListAPIView):
 
     def get_queryset(self):
         workflow_id = self.kwargs["workflow_id"]
-        return Step.objects.filter(workflow_id=workflow_id).order_by("id")
+        return Step.objects.filter(workflow_id=workflow_id).annotate(
+            action_count=Count('actions_from')
+        ).order_by("id")
 
 
 class StepCreateView(generics.CreateAPIView):
