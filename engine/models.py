@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.timezone import now
+from django.utils.translation import gettext_lazy as _
 from mongoengine import PULL, BooleanField, DictField, Document, StringField
 
 from organizational_structure.models import Position
@@ -57,9 +58,32 @@ class DynamicForm(Document):
 
 
 class Action(models.Model):
+    # Choices for action type
+    ACTION_TYPE_CHOICES = [
+        ('external_entity', _('External Entity')),
+        ('complete_application', _('Complete Application')),
+        ('step', _('Step')),
+    ]
+    
+    # Choices for status
+    STATUS_CHOICES = [
+        ('completed', _('Completed')),
+        ('cancelled', _('Cancelled')),
+        ('rejected', _('Rejected')),
+    ]
+    
     name_en = models.CharField(max_length=255)
     name_ar = models.CharField(max_length=255)
-    is_external = models.BooleanField(default=False)
+    action_type = models.CharField(
+        max_length=20,
+        choices=ACTION_TYPE_CHOICES,
+        default='step'
+    )
+    status = models.CharField(
+        max_length=20,
+        choices=STATUS_CHOICES,
+        default='completed'
+    )
     step = models.ForeignKey(
         Step, on_delete=models.CASCADE, related_name="actions_from"
     )
