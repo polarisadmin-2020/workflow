@@ -34,6 +34,20 @@ class Step(models.Model):
         return self.name_en
 
     form_id = models.CharField(max_length=255, blank=True, null=True)
+    
+    # Choices for link form
+    LINK_FORM_CHOICES = [
+        ('applicant', _('Applicant')),
+        ('position', _('Position')),
+    ]
+    
+    link_form = models.CharField(
+        max_length=20,
+        choices=LINK_FORM_CHOICES,
+        blank=True,
+        null=True,
+        help_text=_('Type of form to link: applicant or position')
+    )
 
 
 class DynamicForm(Document):
