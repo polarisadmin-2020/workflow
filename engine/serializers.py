@@ -48,7 +48,7 @@ class StepSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Step
-        fields = ["id", "workflow", "name_ar", "name_en", "position", "form_id", "action_count"]
+        fields = ["id", "workflow", "name_ar", "name_en", "position", "form_id", "link_form", "action_count"]
 
 
 class ActionSerializer(serializers.ModelSerializer):
