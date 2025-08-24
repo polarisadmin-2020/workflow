@@ -102,7 +102,7 @@ class Action(models.Model):
         Step, on_delete=models.CASCADE, related_name="actions_from"
     )
     next_step = models.ForeignKey(
-        Step, on_delete=models.CASCADE, related_name="actions_to"
+        Step, on_delete=models.CASCADE, related_name="actions_to", blank=True, null=True
     )
 
     def __str__(self):
