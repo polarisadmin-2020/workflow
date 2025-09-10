@@ -78,3 +78,24 @@ class ActionListView(generics.ListAPIView):
     def get_queryset(self):
         step_id = self.kwargs["step_id"]
         return Action.objects.filter(step_id=step_id).order_by("id")
+
+
+class StepsByApplicationView(generics.ListAPIView):
+    """
+    List all Steps for a given application (assuming Step has application field).
+    """
+    serializer_class = StepSerializer
+
+    def get_queryset(self):
+        app_id = self.kwargs["application_id"]
+        return Step.objects.filter(application_id=app_id).order_by("id")
+
+class CurrentStepByApplicationView(generics.RetrieveAPIView):
+    """
+    Returns the current/latest Step for an application.
+    """
+    serializer_class = StepSerializer
+
+    def get_object(self):
+        app_id = self.kwargs["application_id"]
+        return Step.objects.filter(application_id=app_id).order_by("-id").first()
