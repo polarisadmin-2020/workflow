@@ -5,8 +5,10 @@ from engine.views import (
     ActionDeleteView,
     ActionListView,
     ActionUpdateView,
+    CurrentStepByApplicationView,
     StepCreateView,
     StepDeleteView,
+    StepsByApplicationView,
     StepsByWorkflowView,
     StepUpdateView,
     WorkflowCreateView,
@@ -45,7 +47,7 @@ urlpatterns = [
     path("actions/<int:pk>/update/", ActionUpdateView.as_view(), name="action_update"),
     path("actions/<int:pk>/delete/", ActionDeleteView.as_view(), name="action_delete"),
     path("actions/list/<int:step_id>/", ActionListView.as_view(), name="action_list"),
-    # Application endpoints
-    path("applications/<int:application_id>/steps/", StepsByApplicationView.as_view(), name="steps-by-application"),
-    path("applications/<int:application_id>/current-step/", CurrentStepByApplicationView.as_view(), name="current-step-by-application"),
+    # Application-specific step endpoints
+    path("applications/<str:application_number>/steps/", StepsByApplicationView.as_view(), name="steps-by-application"),
+    path("applications/<str:application_number>/current-step/", CurrentStepByApplicationView.as_view(), name="current-step-by-application"),
 ]

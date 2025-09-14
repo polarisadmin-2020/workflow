@@ -8,6 +8,7 @@ class Application(DynamicDocument):
 
     application_number = StringField(required=True, unique=True)
     status = StringField(required=True)
+    position_id = StringField(required=False, help_text="ID of the position handling this application")
     created_at = StringField()
     meta = {
         "collection": "application",
